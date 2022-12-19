@@ -33,10 +33,10 @@ def infer_image(
     image = torch.unsqueeze(image, 0)
 
     if torch.cuda.is_available():
-        image.to("cuda")
+        image = image.to("cuda")
 
     # get first item from batch, get first item from tuple (the class)
-    predictions = model.forward(image)[0][0].detach().cpu()
+    predictions = model.forward(image)[0][0].detach()
 
     prediction_argmax = torch.argmax(predictions)
     prediction_class = label_hierarchy.classes[prediction_argmax]
@@ -48,7 +48,6 @@ def infer_image(
 @inference_app.command()
 def inference(model_path: Path, image_path: Path, result_path: Path) -> None:
     """
-
     Args:
         model_path: folder that contains the model weights and other artifacts needed to load the model
         image_path: which image to do inference on
