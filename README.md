@@ -169,4 +169,14 @@ folder `cms` that contains many confusion matrices.
 
 ## Inference
 
-Not implemented.
+One image at a time can be classified with:
+
+```bash
+poetry run python moths/cmd/infer.py artifacts/ input.image output.json
+```
+
+Assuming:
+- artifacts/ contains the weights of the model as best.ckpt (folder will be created after training)
+- output.json does not yet exist
+
+This command works on Windows 10. On Linux, the first argument can simply be infer.py without the path to it. 

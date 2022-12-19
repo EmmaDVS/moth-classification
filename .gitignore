@@ -136,7 +136,8 @@ outputs/
 multirun/
 
 test_data/image_folder
-
+artifacts/
+output/
 
 # images
 *.jpg
