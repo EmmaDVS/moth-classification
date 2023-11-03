@@ -48,6 +48,14 @@ python moths/cmd/train.py
 MOTHS_CONFIG=optim python moths/cmd/train.py -m  # specify multi run when using optim.yaml
 ```
 
+or in Windows:
+
+```bash
+set MOTHS_CONFIG=dev
+poetry run python moths\\cmd\\train.py
+```
+
+
 There are 3 predefined configuration files:
 
 1. default: run the default training on the 'Vlinderstichting' machine

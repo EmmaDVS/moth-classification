@@ -21,6 +21,8 @@ from moths.model import Model, ModelConfig
 from moths.trainer import TrainerConfig, get_trainer
 from moths.tune import tune
 
+from omegaconf import OmegaConf
+
 log = logging.getLogger("MOTHS")
 
 

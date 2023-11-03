@@ -218,7 +218,7 @@ class LitModule(pl.LightningModule):
     def training_epoch_end(self, outputs: List[BATCH_OUTPUT]):
         self._log_metric_compute("train")
         self._log_epoch_loss("train", outputs)
-        self._log_north_star("train", outputs)
+        # self._log_north_star("train", outputs)
 
     def on_validation_epoch_start(self):
         self._clear_metrics("val")
@@ -231,7 +231,7 @@ class LitModule(pl.LightningModule):
     def validation_epoch_end(self, outputs: List[BATCH_OUTPUT]):
         self._log_metric_compute("val")
         self._log_epoch_loss("val", outputs)
-        self._log_north_star("val", outputs)
+        # self._log_north_star("val", outputs)
 
     def on_test_epoch_start(self):
         self._clear_metrics("test")
@@ -242,7 +242,7 @@ class LitModule(pl.LightningModule):
     def test_epoch_end(self, outputs: List[BATCH_OUTPUT]):
         self._log_metric_compute("test")
         self._log_epoch_loss("test", outputs)
-        self._log_north_star("test", outputs)
+        # self._log_north_star("test", outputs)
 
     def configure_optimizers(self):
         optimizer = instantiate(
