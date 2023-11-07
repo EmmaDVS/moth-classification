@@ -1,9 +1,10 @@
 import json
 from pathlib import Path
 from typing import Tuple
-
 import torch
+import numpy as np
 import typer
+import pickle
 from PIL import Image
 from torch import nn
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
@@ -11,8 +12,13 @@ from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTen
 from moths.classifier import load_model
 from moths.label_hierarchy import LabelHierarchy
 
+import cropAndClassifyMoths.classifier as classifier
+import cropAndClassifyMoths.cropper as cropper
+
 inference_app = typer.Typer()
 
+def softmax(x):
+    return np.exp(x) / sum(np.exp(x))
 
 def infer_image(
     model: nn.Module, label_hierarchy: LabelHierarchy, path: Path
@@ -45,25 +51,69 @@ def infer_image(
     return prediction_class, prediction_score
 
 
-@inference_app.command()
-def inference(model_path: Path, image_path: Path) -> None:
-    """
+def inference_new(model_path: Path, image_path: Path) -> Tuple[str, float]:
+    # Crop the image
+    boxes, images = cropper.crop(model_path, image_path)
 
+    # Load the classification model
+    model = classifier.load_model(model_path, "efficientnet_b1")
+
+    with (model_path / "classMapping231106.pickle").open("rb") as f:
+        class_mapping = pickle.load(f)
+
+    result = {}
+
+    # Loop over the crops and classify them
+    for i, image in enumerate(images):
+        tfs = Compose([
+            ToTensor(),
+            Normalize(
+                mean=[136.24, 133.32, 116.16],
+                std=[46.18, 46.70, 48.89]
+            )
+        ])
+
+        image = tfs(image)
+        image = torch.unsqueeze(image, 0)
+
+        output = model(image)
+        output = output.data.cpu().numpy()
+        index = output.argmax()
+        score = softmax(output[0]).max()
+
+        result[i] = {
+            "path": str(image_path.absolute()),
+            "class": str(class_mapping[index]),
+            "score": float(score),
+            "box": boxes[i]
+        }
+
+    # Return the crops with their score and class
+    print(json.dumps(result))
+
+
+@inference_app.command()
+def inference(model_path: Path, image_path: Path, version: str = "old") -> None:
+    """
     Args:
         model_path: folder that contains the model weights and other artifacts needed to load the model
         image_path: which image to do inference on
         result_path: file to write the results to (must be non-existent)
     """
-    model, label_hierarchy = load_model(model_path, "efficientnet_b7")
+    if version == "new":
+        inference_new(model_path, image_path)
+    else:
+        model, label_hierarchy = load_model(model_path, "efficientnet_b7")
+        if torch.cuda.is_available():
+           model = model.to("cuda")
+        klass, score = infer_image(model, label_hierarchy, image_path)
 
-    if torch.cuda.is_available():
-       model = model.to("cuda")
-
-    klass, score = infer_image(model, label_hierarchy, image_path)
-
-    print(json.dumps({"path": str(image_path.absolute()), "class": klass, "score": score}))
+        print(json.dumps({0: {
+            "path": str(image_path.absolute()),
+            "class": klass,
+            "score": score
+        }}))
 
 
 if __name__ == "__main__":
-    # inference_app(['artifacts/', 'images/marmeruil.jpg', 'output/result2.json'])
     inference_app()
