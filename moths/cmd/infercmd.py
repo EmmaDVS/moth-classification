@@ -58,8 +58,8 @@ def inference_new(model_path: Path, image_path: Path) -> Tuple[str, float]:
     # Load the classification model
     model = classifier.load_model(model_path, "efficientnet_b1")
 
-    with (model_path / "classMapping231106.pickle").open("rb") as f:
-        class_mapping = pickle.load(f)
+    with (model_path / "classMapping231106.txt").open("rb") as f:
+        class_mapping = json.load(f)
 
     result = {}
 
