@@ -51,9 +51,9 @@ def infer_image(
     return prediction_class, prediction_score
 
 
-def inference_new(model_path: Path, image_path: Path) -> Tuple[str, float]:
+def inference_new(model_path: Path, image_path: Path, multiple_results: bool) -> Tuple[str, float]:
     # Crop the image
-    boxes, images = cropper.crop(model_path, image_path)
+    boxes, images = cropper.crop(model_path, image_path, multiple_results)
 
     # Load the classification model
     model = classifier.load_model(model_path, "efficientnet_b1")
@@ -89,11 +89,14 @@ def inference_new(model_path: Path, image_path: Path) -> Tuple[str, float]:
         }
 
     # Return the crops with their score and class
-    print(json.dumps(result))
+    if multiple_results:  # Return nested JSON
+        print(json.dumps(result))
+    else:  # Return the first result only (there are no more anyway)
+        print(json.dumps(result[0]))
 
 
 @inference_app.command()
-def inference(model_path: Path, image_path: Path, version: str = "old") -> None:
+def inference(model_path: Path, image_path: Path, version: str = "old", multiple_results: bool = False) -> None:
     """
     Args:
         model_path: folder that contains the model weights and other artifacts needed to load the model
@@ -101,18 +104,21 @@ def inference(model_path: Path, image_path: Path, version: str = "old") -> None:
         result_path: file to write the results to (must be non-existent)
     """
     if version == "new":
-        inference_new(model_path, image_path)
+        inference_new(model_path, image_path, multiple_results)
     else:
         model, label_hierarchy = load_model(model_path, "efficientnet_b7")
         if torch.cuda.is_available():
            model = model.to("cuda")
         klass, score = infer_image(model, label_hierarchy, image_path)
 
-        print(json.dumps({0: {
-            "path": str(image_path.absolute()),
-            "class": klass,
-            "score": score
-        }}))
+        if multiple_results:  # New format with nested JSON
+            print(json.dumps({0: {
+                "path": str(image_path.absolute()),
+                "class": klass,
+                "score": score
+            }}))
+        else:  # Original format
+            print(json.dumps({"path": str(image_path.absolute()), "class": klass, "score": score}))
 
 
 if __name__ == "__main__":

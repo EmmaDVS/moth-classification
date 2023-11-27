@@ -83,7 +83,7 @@ def squareYoloCrop(images,
             
     return box_crops, cropped_images
 
-def crop(model_path, image_path):
+def crop(model_path, image_path, multi_crop):
     # Load the crop model
     yolo = torch.hub.load("ultralytics/yolov5",
                           "custom",
@@ -104,5 +104,5 @@ def crop(model_path, image_path):
     # Crop the images
     boxes, images = squareYoloCrop(images=image_list,
                                    predictions=results,
-                                   multi_crop=True)
+                                   multi_crop=multi_crop)
     return boxes, images
