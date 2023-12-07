@@ -76,8 +76,8 @@ def inference_new(model_path: Path, image_path: Path, multiple_results: bool) ->
         tfs = Compose([
             ToTensor(),
             Normalize(
-                mean=[0.49426943, 0.4825833, 0.41643557],
-                std=[0.26641452, 0.26151788, 0.27572504]
+                mean=[136.24, 133.32, 116.16],
+                std=[46.18, 46.70, 48.89]
             )
         ])
 
