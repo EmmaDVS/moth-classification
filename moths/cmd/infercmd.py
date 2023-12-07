@@ -1,5 +1,6 @@
 import os
 os.environ['MPLCONFIGDIR'] = '/tmp/matplotlib'
+os.environ['YOLO_CONFIG_DIR'] = '/tmp/yolo'
 
 import json
 from pathlib import Path
