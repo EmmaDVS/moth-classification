@@ -9,11 +9,11 @@ from PIL import Image
 from torch import nn
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
 
-from moths.classifier import load_model
-from moths.label_hierarchy import LabelHierarchy
+from ..moths.classifier import load_model
+from ..moths.label_hierarchy import LabelHierarchy
 
-import cropAndClassifyMoths.classifier as classifier
-import cropAndClassifyMoths.cropper as cropper
+from ..cropAndClassifyMoths import classifier
+from ..cropAndClassifyMoths import cropper
 
 inference_app = typer.Typer()
 
