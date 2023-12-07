@@ -1,3 +1,6 @@
+import os
+os.environ['MPLCONFIGDIR'] = '/tmp/matplotlib'
+
 import json
 from pathlib import Path
 from typing import Tuple
