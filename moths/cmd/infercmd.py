@@ -88,7 +88,7 @@ def inference_new(model_path: Path, image_path: Path, multiple_results: bool) ->
 
         result[i] = {
             "path": str(image_path.absolute()),
-            "class": str(class_mapping[index]),
+            "class": str(class_mapping[str(index)]),
             "score": float(score),
             "box": boxes[i]
         }
