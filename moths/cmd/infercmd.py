@@ -8,6 +8,9 @@ import pickle
 from PIL import Image
 from torch import nn
 from torchvision.transforms import CenterCrop, Compose, Normalize, Resize, ToTensor
+import sys
+path_root = Path(__file__).parents[2]
+sys.path.append(str(path_root))
 
 from moths.classifier import load_model
 from moths.label_hierarchy import LabelHierarchy
