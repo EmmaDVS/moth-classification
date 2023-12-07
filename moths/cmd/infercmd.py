@@ -12,6 +12,8 @@ import sys
 path_root = Path(__file__).parents[2]
 sys.path.append(str(path_root))
 
+torch.hub.set_dir('/home/vlinderstichting/.cache/torch/hub')
+
 from moths.classifier import load_model
 from moths.label_hierarchy import LabelHierarchy
 
