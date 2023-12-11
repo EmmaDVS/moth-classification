@@ -10,7 +10,6 @@ In deze folder staat alles voor het trainen van een beeldherkenningsmodel voor n
 ## Notebooks
 
 - **Beeldherkenning.ipynb**: Train de beeldherkenning voor nachtvlinders (of iets anders).
-- **MottenHerkennen.ipynb**: Originele versie van `Beeldherkenning.ipynb`, met rotzooi code. _**TBR**_.
 - **DataVoorbereiden.ipynb**: Combineer verschillende datasets tot één gestandaardiseerde, gefilterde dataset.
 - **Scrape<...>Photos.ipynb**: Scripts voor het scrapen van respectievelijk GBIF, Lepiforum (LFP) en het DVS Meetnet.
 
