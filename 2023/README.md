@@ -1,0 +1,3 @@
+- croppedDataset: dataset met bijgesneden foto's
+- mothDetection: bevat alles om het model dat mottenfoto's bijsnijd te trainen
+- mothRecognition: bevat de beeldherkenning en alles om de dataset te maken

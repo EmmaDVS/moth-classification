@@ -1,0 +1,5 @@
+- **EngelseNamenCompleet.csv**: Mapping van Engelse en wetenschappelijke namen van nachtvlinders. _Bron: Meetnet_.
+- **meetnet_moth_photos_approved_230912_231019.csv**: Details over manueel gevalideerde nachtvlinderfoto's in het meetnet tussen 2023-09-12 en 2023-10-19. De respectievelijke dataset is te vinden in `/data/mothRecognition/data`. _Bron: Meetnet_.
+- **micro_gbif_keys.csv**: Mapping van species keys van GBIF.org naar micromot soorten. Nodig voor het downloaden van foto's via de GBIF API. _Bron: GBIF/ScrapeGBIFPhotos.ipynb_.
+- **mothcount_added.csv**: Lijst met mottensoorten + of een soort micro of macro is. _Bron: Meetnet/Jurriën_.
+- **pseudospecies_beeldherkenning_V20230906.csv**: Lijst met alle pseudo-/combinatiesoorten. _Bron: Jurriën/Rik_.

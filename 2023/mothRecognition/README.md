@@ -1,0 +1,3 @@
+- **data**: De nachtvlinderfoto's. Verschillende datasets zijn hier opgeslagen. Voeg nieuwe datasets hier toe.
+- **notebooks**: Hier staat alles om de nachtvlinderbeeldherkenning te trainen.
+- **resources**: Hier staan extra bestanden die de beeldherkenning gebruikt. Ze staan apart, omdat ze van externe bronnen komen.
