@@ -1,3 +1,14 @@
+# Moth classification
+This README file is about the original project.
+All work from 2023 can be found in the folder `2023`.
+Each of the folders there has its own README, explaining its contents.
+It is possible that folders or files described in the READMEs are missing.
+That is because they contain too large/too many files or should not here.
+They are however still located in the original computer where this model has been trained.
+Generally, these files can be missed or should be created from scratch or imported anyway (e.g. a dataset).
+
+_Below is the README from the original project._
+
 Repository for training &amp; serving a classification model for moth species.
 
 # Installation
